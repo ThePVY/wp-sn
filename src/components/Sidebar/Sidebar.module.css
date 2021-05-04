@@ -1,0 +1,27 @@
+.sidebar {
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    grid-area       : side;
+    padding-left    : 1em;
+
+    margin: 1vh 0px;
+}
+
+.sidebar div {
+    padding: 0.5em 0;
+}
+
+.sidebar nav {
+    position: -webkit-sticky;
+    position: sticky;
+    top     : 20px;
+}
+
+.sidebar a {
+    color:rgb(122, 134, 134);
+    text-decoration: none;
+}
+
+.sidebar a.active {
+    color:rgb(148, 160, 160);
+}

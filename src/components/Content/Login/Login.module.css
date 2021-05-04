@@ -1,0 +1,22 @@
+.login {
+    width: fit-content;
+    
+}
+
+.loginForm {
+    padding: 1vh 1vw;
+
+    width: fit-content;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0px);
+}
+
+.loginForm div {
+    padding-bottom: 20px;
+}
+
+
+.error {
+    color: rgb(201, 67, 67);
+}

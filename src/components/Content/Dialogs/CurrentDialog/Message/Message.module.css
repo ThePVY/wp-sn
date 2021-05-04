@@ -1,0 +1,13 @@
+.message {
+    text-align: left;
+    padding: 10px 10px;
+    color     : rgb(72, 78, 78);
+
+    word-break: break-all;
+}
+
+.message.my {
+    text-align: right;
+    background-color: rgb(243, 242, 242);
+    padding-left: 5em;
+}

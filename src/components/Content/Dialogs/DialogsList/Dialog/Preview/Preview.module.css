@@ -1,0 +1,8 @@
+.preview {
+    grid-area: preview;
+    
+}
+
+.preview {
+    padding-left: 10px;
+}

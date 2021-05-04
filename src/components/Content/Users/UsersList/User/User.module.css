@@ -1,0 +1,45 @@
+.user {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0px;
+}
+
+.avatar {
+    padding-right: 10px;
+}
+
+.info {
+    border: 1px solid rgb(167, 165, 165);
+    border-radius: 10px;
+    flex-basis: 500px;
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.infoLeft div:first-child{
+    padding: 5px 0px 30px 10px;
+}
+
+.infoLeft div:last-child{
+    padding-left: 10px;
+}
+
+.infoRight {
+    align-self: center;
+}
+
+.infoRight div {
+    padding-right: 10px
+}
+
+.image {
+    width: 100px;
+    border-radius: 100px;
+}
+
+.user button {
+    width: 100px;
+}

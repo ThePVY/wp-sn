@@ -1,0 +1,21 @@
+.profileStatus {
+    padding: 5px 20px;
+}
+
+.statusForm textarea {
+    width: 90%;
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.buttonsContainer button {
+    width: 100px
+}
+
+.statusContainer span {
+    word-break: break-all;
+}
+

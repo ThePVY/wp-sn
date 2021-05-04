@@ -1,0 +1,15 @@
+.footer {
+    background-color: rgb(245, 245, 245);
+    grid-area       : footer;
+
+    text-align : center;
+
+    height: 6vh;
+}   
+
+.content {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

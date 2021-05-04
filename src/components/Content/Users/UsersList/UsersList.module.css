@@ -1,0 +1,29 @@
+.usersList {
+    padding: 10px;
+}
+
+.pagesNumbers {
+    width: fit-content;
+    transform: translate(-50%, 0px);
+    position: relative;
+    left: 50%;
+}
+
+.pagesNumbers span{
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.selectedPage {
+    font-weight: bold;
+}
+
+.preloader img {
+    width: 15px;
+    display: inline-block;
+    transform: translate(0px, 15%);
+}
+
+.preloader span {
+    padding: 0px;
+}

@@ -1,0 +1,10 @@
+.dialogsList {
+    height: inherit;
+    overflow-y: hidden;
+}
+
+.content {
+    padding: 20px 0px 0px 20px;
+    height: inherit;
+    overflow-y: scroll;
+}

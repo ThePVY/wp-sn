@@ -1,0 +1,54 @@
+.post {
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+.centered {
+    height: fit-content;
+    width: fit-content;
+    position: relative;
+    top: 50%;
+    transform: translate(0px, -50%);
+}
+
+.centered div {
+    text-align: center;
+}
+
+.post img {
+    width: 50px;
+    border-radius: 50px;
+}
+
+.messageContainer {
+    min-height: 40px;
+    padding: 1em 1em;
+    margin-left: 1em;
+    border: 1px solid rgb(167, 166, 166);
+    border-radius: 10px;
+}
+
+.message {
+    word-break: normal;
+    display: inline-block;
+}
+
+.like, .delete {
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.delete {
+    display: inline-block;
+
+    position: relative;
+    left: 15.5vw;
+    bottom: 1.5em;
+
+    cursor: pointer;
+}
+
+
+

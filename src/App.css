@@ -1,0 +1,55 @@
+/* .centered {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.centered-vertical {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.centered-horizontal {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centered-absolute {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  margin: auto;
+}
+
+.centered-fixed {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  margin: auto;
+}
+
+.screen-shadowed {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+}
+
+.fit-content {
+  width: fit-content;
+  height: fit-content;
+}
+
+.stretch-div {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+.disp-inl-block {
+  display: inline-block;
+} */

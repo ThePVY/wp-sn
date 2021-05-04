@@ -1,0 +1,8 @@
+.ava {
+    grid-area: ava;
+}
+
+.ava img {
+    width: 50px;
+    border-radius: 40px;
+}

@@ -1,0 +1,18 @@
+.content {
+    box-sizing: border-box;
+    grid-area       : content;
+    
+    color     : rgb(72, 78, 78);
+
+    margin: 1vh 0px;
+    margin-left: 2vh;
+}
+
+.preloaderContainer {
+    width: fit-content;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: inherit;
+}

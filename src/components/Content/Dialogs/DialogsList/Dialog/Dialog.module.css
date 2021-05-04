@@ -1,0 +1,10 @@
+.dialog {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 10fr;
+    grid-template-areas: 
+    "ava name"
+    "ava preview";
+    height: 70px;
+    color     : rgb(72, 78, 78);
+}
