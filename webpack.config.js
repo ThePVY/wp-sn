@@ -4,7 +4,7 @@ const path = require('path')
 
 module.exports = {
   mode: 'development',
-  entry: path.join(__dirname, 'src', 'index.ts'),
+  entry: path.join(__dirname, 'src', 'index.tsx'),
   devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
@@ -16,7 +16,7 @@ module.exports = {
     new CleanWebpackPlugin()
   ],
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js', '.jsx'],
   },
   output: {
     path: path.join(__dirname, 'dist'),
