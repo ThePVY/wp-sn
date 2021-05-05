@@ -1,17 +1,43 @@
+import { Dispatch } from "react"
 import { stopSubmit } from "redux-form"
 import { authAPI } from "../api/auth-api"
 import { initializeApp } from "./app-reducer"
 
 const SET_AUTH_DATA = 'SET_AUTH_DATA'
 
-//for construct action in components
-export const actionCreator = {
+interface IAuthReducerAC {
+    setAuthData: (data: AuthMeResponseT) => AuthDataAction
+}
+
+type AuthDataAction = {
+    type: typeof SET_AUTH_DATA,
+    data: AuthMeResponseT
+}
+
+type AuthMeResponseT = {
+    data: AuthDataT,
+    resultCode: 1 | 0
+}
+
+type AuthDataT = {
+    id: number,
+    email: string,
+    login: string
+}
+
+export const actionCreator: IAuthReducerAC = {
     setAuthData: data => ({ type: SET_AUTH_DATA, data })
+}
+
+export type LoginFormDataT = {
+    login: string,
+    password: string,
+    rememberMe: boolean
 }
 
 export const thunkCreator = {
     getAuthData() {
-        return async dispatch => {
+        return async (dispatch: Dispatch<AuthDataAction>) => {
             try {
                 const data = await authAPI.getAuthData()
                 if (data.resultCode === 0) {
@@ -27,10 +53,10 @@ export const thunkCreator = {
             }
         }
     },
-    signIn(jsonObj) {
-        return async dispatch => {
+    signIn(jsonData: LoginFormDataT) {
+        return async (dispatch : any) => {
             try {
-                const data = await authAPI.signIn(jsonObj)
+                const data = await authAPI.signIn(jsonData)
                 if (data.resultCode === 0)
                     dispatch(initializeApp())
                 else {
@@ -44,11 +70,11 @@ export const thunkCreator = {
         }
     },
     signOut() {
-        return async dispatch => {
+        return async (dispatch: Dispatch<AuthDataAction>) => {
             try {
                 const data = await authAPI.signOut()
                 if (data.resultCode === 0) {
-                    const authData = {
+                    const authData : AuthMeResponseT = {
                         resultCode: 1,
                         data: {
                             id: undefined,
@@ -66,31 +92,27 @@ export const thunkCreator = {
     }
 }
 
-//initial value of state
+
 const initialState = {
-    isAuthorized: false,
+    isAuthorized: false, 
     data: {
         id: undefined,
         login: undefined,
         email: undefined
-    }
+    } as AuthDataT
 }
 
-//for changing state in store
-export const authReducer = (state = initialState, action) => {
+type AuthState = typeof initialState
+
+export const authReducer = (state = initialState, action: AuthDataAction): AuthState => {
     switch (action.type) {
         case SET_AUTH_DATA:
-            return setAuthData(state, action.data)
+            return {
+                ...state,
+                data: action.data.data,
+                isAuthorized: action.data.resultCode === 0
+            }
         default:
             return state
     }
 }
-
-
-/*---------------------------------------------------------------------------------*/
-
-const setAuthData = (state, data) => ({
-    ...state,
-    data: data.data,
-    isAuthorized: data.resultCode === 0
-})

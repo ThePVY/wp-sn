@@ -18,9 +18,9 @@ export const initializeApp = () => async (dispatch) => {
     await dispatch(profileTC.getProfileData(userId));
     await dispatch(profileTC.getProfileStatus(userId));
     console.log("App Reducer loaded Status and Data");
-
     dispatch(actionCreator.setInitialized());
-  } catch (err) {
+  }
+  catch (err) {
     setTimeout(() => {
       console.log(err);
       console.log("Reinitialization...");
