@@ -1,33 +1,66 @@
+import React from 'react'
 import { NavLink } from 'react-router-dom';
-import styles from './Sidebar.module.css'
+import styled from 'styled-components';
+
+const Wrapper = styled.aside`
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    grid-area       : side;
+    padding-left    : 1em;
+    margin: 1vh 0px;
+    div {
+        padding: 0.5em 0;
+    }
+    nav {
+        position: -webkit-sticky;
+        position: sticky;
+        top     : 20px;
+    }
+    a {
+        color:rgb(122, 134, 134);
+        text-decoration: none;
+    }
+    a:hover {
+        font-weight: 500;
+    }
+`
+
+const activeClassName = 'nav-item-active'
+
+const StyledLink = styled(NavLink).attrs({ activeClassName })`
+    &.${activeClassName} {
+        color:rgb(174, 182, 182);
+    }
+`
+
 
 const Sidebar = () => {
     return (
-        <aside className={styles.sidebar}>
+        <Wrapper>
             <nav>
-                <div className={styles.item}>
-                    <NavLink to='/profile' activeClassName={styles.active}>Profile</NavLink>
+                <div>
+                    <StyledLink to='/profile' >Profile</StyledLink>
                 </div>
-                <div className={styles.item}>
-                    <NavLink to='/dialogs' activeClassName={styles.active}>Messages</NavLink>
+                <div>
+                    <StyledLink to='/dialogs' >Messages</StyledLink>
                 </div>
-                <div className={styles.item}>
-                    <NavLink to='/news' activeClassName={styles.active}>News</NavLink>
+                <div>
+                    <StyledLink to='/news' >News</StyledLink>
                 </div>
-                <div className={styles.item}>
-                    <NavLink to='/users' activeClassName={styles.active}>Users</NavLink>
+                <div>
+                    <StyledLink to='/users' >Users</StyledLink>
                 </div>
-                <div className={styles.item}>
-                    <NavLink to='/images' activeClassName={styles.active}>Images</NavLink>
+                <div>
+                    <StyledLink to='/images' >Images</StyledLink>
                 </div>
-                <div className={styles.item}>
-                    <NavLink to='/music' activeClassName={styles.active}>Music</NavLink>
+                <div>
+                    <StyledLink to='/music' >Music</StyledLink>
                 </div>
-                <div className={styles.item}>
-                    <NavLink to='/video' activeClassName={styles.active}>Video</NavLink>
+                <div>
+                    <StyledLink to='/video' >Video</StyledLink>
                 </div>
             </nav>
-        </aside>
+        </Wrapper>
     );
 };
 

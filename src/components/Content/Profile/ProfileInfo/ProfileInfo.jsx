@@ -12,6 +12,7 @@ import { Button } from '../../../common/Button';
 import Div from '../../../common/Div';
 import styled from 'styled-components';
 
+
 const StyledInfo = styled(Div)`
     border: 1px solid grey;
     border-radius: 20px;

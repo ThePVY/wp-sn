@@ -10,5 +10,13 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports" : true,
     "esModuleInterop" : true,
-  }
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "images": ["./src/images/*"]
+    }
+  },
+  "exclude": [
+      "node_modules"
+  ]
 }

@@ -17,6 +17,10 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    alias: {
+      "@": path.resolve(__dirname, 'src'),
+      images: path.resolve(__dirname, 'src/images'),
+    }
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -27,9 +31,11 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     open: true,
     compress: true,
-    port: 9000,
+    port: 3000,
     watchContentBase: true,
-    progress: true
+    progress: true,
+    hot: true,
+    historyApiFallback: true
   },
   module: {
     rules: [
@@ -39,12 +45,27 @@ module.exports = {
         enforce: "pre"
       },
       {
-        test: /\.m?js$/,
+        test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
+            presets: [
+              [
+                "@babel/env",
+                {
+                  targets: {
+                    esmodules: true
+                  }
+                }
+              ],
+              [
+                "@babel/preset-react",
+                {
+                  runtime: "automatic"
+                }
+              ]
+            ],
             plugins: [
               "babel-plugin-styled-components"
             ]
