@@ -1,4 +1,4 @@
-export type LoginFormDataT = {
+export type LoginFormDT = {
   login: string,
   password: string,
   rememberMe: boolean

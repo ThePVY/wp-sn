@@ -1,6 +1,6 @@
-export type ActionT<T, D> = {
+export type ActionT<T, P> = {
   type: T,
-  data: D
+  payload: P
 }
 
 export type ResponseT<T> = {
@@ -8,11 +8,4 @@ export type ResponseT<T> = {
   resultCode: ResultCodeT
 }
 
-export type ResultCodeT = '1' | '0'
-
-
-export type AuthDataT = {
-  id: number,
-  email: string,
-  login: string
-}
+export type ResultCodeT = 1 | 0

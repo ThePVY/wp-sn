@@ -1,3 +1,6 @@
+import { AuthMeDT } from "@/types/api-types"
+import { ActionT, ResponseT } from "@/types/common-types"
+import { LoginFormDT } from "@/types/form-types"
 import { Dispatch } from "react"
 import { stopSubmit } from "redux-form"
 import { authAPI } from "../api/auth-api"
@@ -9,30 +12,12 @@ interface IAuthReducerAC {
     setAuthData: (data: AuthMeResponseT) => AuthDataAction
 }
 
-type AuthDataAction = {
-    type: typeof SET_AUTH_DATA,
-    data: AuthMeResponseT
-}
+type AuthDataAction = ActionT<typeof SET_AUTH_DATA, AuthMeResponseT>
 
-type AuthMeResponseT = {
-    data: AuthDataT,
-    resultCode: 1 | 0
-}
-
-type AuthDataT = {
-    id: number,
-    email: string,
-    login: string
-}
+type AuthMeResponseT = ResponseT<AuthMeDT>
 
 export const actionCreator: IAuthReducerAC = {
-    setAuthData: data => ({ type: SET_AUTH_DATA, data })
-}
-
-export type LoginFormDataT = {
-    login: string,
-    password: string,
-    rememberMe: boolean
+    setAuthData: payload => ({ type: SET_AUTH_DATA, payload })
 }
 
 export const thunkCreator = {
@@ -53,7 +38,7 @@ export const thunkCreator = {
             }
         }
     },
-    signIn(jsonData: LoginFormDataT) {
+    signIn(jsonData: LoginFormDT) {
         return async (dispatch : any) => {
             try {
                 const data = await authAPI.signIn(jsonData)
@@ -99,7 +84,7 @@ const initialState = {
         id: undefined,
         login: undefined,
         email: undefined
-    } as AuthDataT
+    } as AuthMeDT
 }
 
 type AuthState = typeof initialState
@@ -109,8 +94,8 @@ export const authReducer = (state = initialState, action: AuthDataAction): AuthS
         case SET_AUTH_DATA:
             return {
                 ...state,
-                data: action.data.data,
-                isAuthorized: action.data.resultCode === 0
+                data: action.payload.data,
+                isAuthorized: action.payload.resultCode === 0
             }
         default:
             return state
