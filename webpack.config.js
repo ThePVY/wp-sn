@@ -2,9 +2,79 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
+const babelLoader = {
+  test: /\.js(x)?$/,
+  exclude: /(node_modules|bower_components)/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      presets: [
+        [
+          '@babel/env',
+          {
+            targets: {
+              esmodules: true
+            }
+          }
+        ],
+        [
+          '@babel/preset-react',
+          {
+            runtime: 'automatic'
+          }
+        ]
+      ],
+      plugins: [
+        'babel-plugin-styled-components',
+        "react-hot-loader/babel"
+      ]
+    }
+  }
+}
+
+const stylesLoaders = [
+  {
+    test: /\.css$/,
+    use: [
+      'style-loader',
+      'css-loader'
+    ],
+    exclude: /\.module\.css$/
+  },
+  {
+    test: /\.css$/,
+    use: [
+      'style-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          importLoaders: 1,
+          modules: true,
+          modules: {
+            localIdentName: '[name]-[path]-[hash:base64:5]',
+          },
+          sourceMap: false
+        }
+      }
+    ],
+    include: /\.module\.css$/
+  },
+  {
+    test: /\.less$/,
+    use: [
+      'style-loader',
+      'css-loader',
+      'less-loader'
+    ]
+  }
+]
+
 module.exports = {
   mode: 'development',
-  entry: path.join(__dirname, 'src', 'index.tsx'),
+  entry: [
+    'react-hot-loader/patch',
+    path.join(__dirname, 'src', 'index.tsx'),
+  ],
   devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
@@ -18,8 +88,8 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
     alias: {
-      "@": path.resolve(__dirname, 'src'),
-      images: path.resolve(__dirname, 'src/images'),
+      '@': path.resolve(__dirname, 'src'),
+      images: path.resolve(__dirname, 'src/images')
     }
   },
   output: {
@@ -41,59 +111,20 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: ["source-map-loader"],
-        enforce: "pre"
+        use: ['source-map-loader'],
+        enforce: 'pre'
       },
+      babelLoader,
+      ...stylesLoaders,
       {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              [
-                "@babel/env",
-                {
-                  targets: {
-                    esmodules: true
-                  }
-                }
-              ],
-              [
-                "@babel/preset-react",
-                {
-                  runtime: "automatic"
-                }
-              ]
-            ],
-            plugins: [
-              "babel-plugin-styled-components"
-            ]
-          }
-        }
-      },
-      {
-        test: /\.(css|less)$/i,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: true
-            }
-          },
-          "less-loader"
-        ]
-      },
-      {
-        test: /\.tsx?$/,
+        test: /\.ts(x)?$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
-        use: ['file-loader'],
-      },
+        use: ['file-loader']
+      }
     ]
   }
 }

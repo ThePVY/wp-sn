@@ -1,8 +1,6 @@
 import BaseAPI from "./base-api"
 
-function UsersAPI() {
-    
-}
+function UsersAPI() {}
 
 UsersAPI.prototype = new BaseAPI()
 

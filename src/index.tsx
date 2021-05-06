@@ -1,5 +1,6 @@
 import "./index.css";
-import React from "react";
+import {hot} from 'react-hot-loader/root'
+import React, { FC } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -31,16 +32,20 @@ const GlobalStyles = createGlobalStyle`
     }
 `;
 
-ReactDOM.render(
-  <React.StrictMode>
+const RootContainer = () => (
     <HashRouter hashType="slash">
       <Provider store={store}>
         <App />
         <GlobalStyles />
       </Provider>
     </HashRouter>
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+)
+
+const render = (Component: FC) => {
+  const HotWrapper = hot(Component)
+  ReactDOM.render( <HotWrapper />, document.getElementById("root") )
+}
+
+render(RootContainer)
 
 reportWebVitals();
