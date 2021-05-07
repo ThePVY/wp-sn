@@ -1,5 +1,5 @@
 import { UserDT } from '@/types/api-types'
-import { ActionHandlerFT, ActionT } from '@/types/common-types'
+import { ActionT } from '@/types/common-types'
 import { Dispatch } from 'redux'
 import { usersAPI } from '../api/users-api'
 

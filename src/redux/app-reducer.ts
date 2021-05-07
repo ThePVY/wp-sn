@@ -1,7 +1,9 @@
-import { ActionT } from '@/types/common-types'
+import { ActionT, IWrapperF } from '@/types/common-types'
 import { reset } from 'redux-form'
+import { ThunkAction } from 'redux-thunk'
 import { thunkCreator as authTC } from './auth-reducer'
 import { thunkCreator as profileTC } from './profile-reducer'
+import { RootStateT } from './store-redux'
 
 const SET_INITIALIZED = 'app/SET_INITIALIZED'
 const SET_SPIN_LOGO = 'app/SET_SPIN_LOGO'
@@ -9,8 +11,7 @@ const SET_SPIN_LOGO = 'app/SET_SPIN_LOGO'
 type SetInitializedT = ActionT<typeof SET_INITIALIZED, null>
 type SetSpinLogoT = ActionT<typeof SET_SPIN_LOGO, boolean>
 
-export type AppActionsT = SetInitializedT | SetSpinLogoT
-type ActionsT = AppActionsT
+type AppPureActionT = SetInitializedT | SetSpinLogoT
 
 //for construct action in components
 export const actionCreator = {
@@ -18,13 +19,9 @@ export const actionCreator = {
   setSpinLogo: (spin: boolean): SetSpinLogoT => ({ type: SET_SPIN_LOGO, payload: spin }),
 }
 
-type InitializeAppFT = () => InitializeAppThunkT
+type ThunkActionT<R> = ThunkAction<R, RootStateT, undefined, AppPureActionT>
 
-type InitializeAppThunkT = (dispatch: DispatchFT) => any
-
-type DispatchFT = (action: ActionsT) => void
-
-export const initializeApp = () => async (dispatch: DispatchFT) => {
+export const initializeApp = (): ThunkActionT<Promise<void>> => async (dispatch) => {
   try {
     const userId = await dispatch(authTC.getAuthData())
 
@@ -41,8 +38,8 @@ export const initializeApp = () => async (dispatch: DispatchFT) => {
   }
 }
 
-export const spinLogoOn = dispatchCreatorCallback => (dispatch, getState) => {
-  dispatchCreatorCallback()
+export const spinLogoOn = (dispatchWrapper: IWrapperF): ThunkActionT<void> => (dispatch, getState) => {
+  dispatchWrapper()
   dispatch(actionCreator.setSpinLogo(true))
   setTimeout(() => {
     console.log(getState().app.spinLogo)
@@ -50,21 +47,22 @@ export const spinLogoOn = dispatchCreatorCallback => (dispatch, getState) => {
   }, 1500)
 }
 
-export const resetForm = form => dispatch => dispatch(reset(form))
 
-//initial value of state
+export const resetForm = (form: string): ThunkActionT<void> => dispatch => dispatch(reset(form))
+
+
 const initialState = {
   initialized: false,
   spinLogo: false,
 }
+export type AppPartialStateT = typeof initialState
 
-//for changing state in store
-export const appReducer = (state = initialState, action) => {
+export const appReducer = (state = initialState, action: AppPureActionT): AppPartialStateT => {
   switch (action.type) {
     case SET_INITIALIZED:
       return { ...state, initialized: true }
     case SET_SPIN_LOGO:
-      return { ...state, spinLogo: action.spin }
+      return { ...state, spinLogo: action.payload }
     default:
       return state
   }

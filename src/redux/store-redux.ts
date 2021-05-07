@@ -8,7 +8,7 @@ import { reducer as formReducer } from 'redux-form'
 import { appReducer } from "./app-reducer";
 
 
-const reducers = combineReducers({
+const reducer = combineReducers({
     profile: profileReducer,
     dialogs: dialogsReducer,
     users: usersReducer,
@@ -17,11 +17,15 @@ const reducers = combineReducers({
     app: appReducer
 })
 
+export type RootStateT = ReturnType<typeof reducer>
+
+// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, composeEnhancers(
+const store = createStore(reducer, composeEnhancers(
     applyMiddleware(thunkMiddleware)
 ));
 
+// @ts-ignore
 window.store = store
 
 

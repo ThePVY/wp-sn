@@ -1,30 +1,30 @@
 import { AuthMeDT } from '@/types/api-types'
 import { ActionT, ResponseT } from '@/types/common-types'
 import { LoginFormDT } from '@/types/form-types'
-import { Dispatch } from 'redux'
 import { stopSubmit } from 'redux-form'
+import { ThunkAction } from 'redux-thunk'
 import { authAPI } from '../api/auth-api'
 import { initializeApp } from './app-reducer'
+import { RootStateT } from './store-redux'
 
 const SET_AUTH_DATA = 'SET_AUTH_DATA'
 
-type AuthDataAction = ActionT<typeof SET_AUTH_DATA, AuthMeResponseT>
+type SetAuthDataT = ActionT<typeof SET_AUTH_DATA, AuthMeResponseT>
 
-type ThunkActions = AuthDataAction
-
-export type AuthActionsT = AuthDataAction
+export type AuthActionT = SetAuthDataT
 
 type AuthMeResponseT = ResponseT<AuthMeDT>
 
 export const actionCreator = {
-  setAuthData: (payload: AuthMeResponseT): AuthDataAction => ({ type: SET_AUTH_DATA, payload }),
+  setAuthData: (payload: AuthMeResponseT): SetAuthDataT => ({ type: SET_AUTH_DATA, payload }),
 }
 
 export type AuthACT = typeof actionCreator
+type ThunkActionT<R = void> = ThunkAction<Promise<R>, RootStateT, undefined, AuthActionT>
 
 export const thunkCreator = {
-  getAuthData () {
-    return async (dispatch: Dispatch<ThunkActions>) => {
+  getAuthData (): ThunkActionT<Promise<number>> {
+    return async (dispatch) => {
       try {
         const data = await authAPI.getAuthData()
         if (data.resultCode === 0) {
@@ -38,8 +38,8 @@ export const thunkCreator = {
       }
     }
   },
-  signIn (jsonData: LoginFormDT) {
-    return async (dispatch: Dispatch<ThunkActions>) => {
+  signIn (jsonData: LoginFormDT): ThunkActionT {
+    return async (dispatch) => {
       try {
         const data = await authAPI.signIn(jsonData)
         if (data.resultCode === 0) dispatch(initializeApp())
@@ -52,8 +52,8 @@ export const thunkCreator = {
       }
     }
   },
-  signOut () {
-    return async (dispatch: Dispatch<ThunkActions>) => {
+  signOut (): ThunkActionT {
+    return async (dispatch) => {
       try {
         const data = await authAPI.signOut()
         if (data.resultCode === 0) {
@@ -85,7 +85,7 @@ const initialState = {
 
 type AuthState = typeof initialState
 
-export const authReducer = (state = initialState, action: AuthDataAction): AuthState => {
+export const authReducer = (state = initialState, action: AuthActionT): AuthState => {
   switch (action.type) {
     case SET_AUTH_DATA:
       return {

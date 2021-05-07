@@ -11,7 +11,7 @@ export type GetUsersDT = {
   friend?: string
 }
 
-export type PhotosDT = {
+export type UserPhotosDT = {
   small: string | null
   large: string | null
 }
@@ -20,6 +20,26 @@ export type UserDT = {
   id: number
   name: string
   status: string
-  photos: PhotosDT
+  photos: UserPhotosDT
   followed: boolean
+}
+
+export type UserContactsDT = {
+  github: string | null
+  vk: string | null
+  facebook: string | null
+  instagram: string | null
+  twitter: string | null
+  website: string | null
+  youtube: string | null
+  mainLink: string | null
+}
+
+export type UserProfileDT = {
+  userId: number
+  lookingForAJob: boolean
+  lookingForAJobDescription: string | null
+  fullName: string | null
+  contacts: UserContactsDT | null
+  photos: UserPhotosDT | null
 }

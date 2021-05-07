@@ -4,3 +4,7 @@ export type LoginFormDT = {
   rememberMe: boolean
 }
 
+export type ProfileStatusFormDT = {
+  status: string
+}
+
