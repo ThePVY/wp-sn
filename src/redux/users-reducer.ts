@@ -1,7 +1,9 @@
 import { UserDT } from '@/types/api-types'
 import { ActionT } from '@/types/common-types'
 import { Dispatch } from 'redux'
+import { ThunkAction } from 'redux-thunk'
 import { usersAPI } from '../api/users-api'
+import { RootStateT } from './store-redux'
 
 const FOLLOW_CLICK = 'FOLLOW_CLICK'
 const SHOW_MORE_CLICK = 'SHOW_MORE_CLICK'
@@ -21,7 +23,7 @@ type SetLoadingsT = ActionT<typeof SET_LOADINGS, LoadingsT>
 
 type LoadingsT = { userId: number; isLoading: boolean }
 
-export type UsersActionsT =
+export type UsersActionT =
   | FollowClickT
   | ShowMoreClickT
   | SetUsersT
@@ -64,9 +66,11 @@ export type UsersACT = typeof actionCreator
 
 export const getUsersAC = () => actionCreator
 
+type ThunkActionT<R = void> = ThunkAction<R, RootStateT, undefined, UsersActionT>
+
 export const thunkCreator = {
-  getUsers (p: number) {
-    return async (dispatch: Dispatch<UsersActionsT>) => {
+  getUsers (p: number): ThunkActionT {
+    return async (dispatch) => {
       try {
         dispatch(actionCreator.usersList.toggleIsFetching(true))
         const data = await usersAPI.getUsers(p)
@@ -79,8 +83,8 @@ export const thunkCreator = {
       }
     }
   },
-  setFollow (userId: number, followed: boolean) {
-    return async (dispatch: Dispatch<UsersActionsT>) => {
+  setFollow (userId: number, followed: boolean): ThunkActionT {
+    return async (dispatch) => {
       try {
         dispatch(actionCreator.usersList.toggleIsFetching(true))
         dispatch(actionCreator.usersList.setLoadings(userId, true))
@@ -111,28 +115,42 @@ const initialState = {
 
 export type UsersStateT = typeof initialState
 
-export const usersReducer = (state = initialState, action: UsersActionsT): UsersStateT => {
+export const usersReducer = (state = initialState, action: UsersActionT): UsersStateT => {
   switch (action.type) {
     case FOLLOW_CLICK:
-      return toggleFollow(state, action.payload)
+      return {
+        ...state,
+        usersList: state.usersList.map(user => (
+          user.id === action.payload ? { ...user, followed: !user.followed } : user
+        )),
+      }
 
     case SET_USERS:
-      return setUsers(state, action.payload)
+      return { ...state, usersList: [...action.payload] }
 
     case SHOW_MORE_CLICK:
       return state
 
     case SET_USERS_TOTAL_COUNT:
-      return setUsersTotalCount(state, action.payload)
+      return {
+        ...state,
+        usersTotalCount: action.payload,
+        pagesTotalCount: Math.ceil(action.payload / state.pageSize),
+      }
 
     case SET_SELECTED_PAGE:
-      return setSelectedPage(state, action.payload)
+      return { ...state, selectedPage: action.payload }
 
     case TOGGLE_IS_FETCHING:
-      return toggleIsFetching(state, action.payload)
+      return { ...state, isFetching: action.payload }
 
     case SET_LOADINGS:
-      return setLoadings(state, action.payload)
+      return {
+        ...state,
+        loadings: action.payload.isLoading
+          ? [...state.loadings, action.payload.userId]
+          : state.loadings.filter(item => item !== action.payload.userId),
+      }
 
     default:
       return state
@@ -140,38 +158,3 @@ export const usersReducer = (state = initialState, action: UsersActionsT): Users
 }
 
 /*-----------------------------------------------------------------------------------------------*/
-
-const toggleFollow = (state: UsersStateT, userId: number): UsersStateT => ({
-  ...state,
-  usersList: state.usersList.map(user => {
-    return user.id === userId ? { ...user, followed: !user.followed } : user
-  }),
-})
-
-const setUsers = (state: UsersStateT, users: UserDT[]): UsersStateT => ({
-  ...state,
-  usersList: [...users],
-})
-
-const setUsersTotalCount = (state: UsersStateT, count: number): UsersStateT => ({
-  ...state,
-  usersTotalCount: count,
-  pagesTotalCount: Math.ceil(count / state.pageSize),
-})
-
-const setSelectedPage = (state: UsersStateT, selectedPage: number): UsersStateT => ({
-  ...state,
-  selectedPage,
-})
-
-const toggleIsFetching = (state: UsersStateT, isFetching: boolean): UsersStateT => ({
-  ...state,
-  isFetching,
-})
-
-const setLoadings = (state: UsersStateT, { userId, isLoading }: LoadingsT): UsersStateT => ({
-  ...state,
-  loadings: isLoading
-    ? [...state.loadings, userId]
-    : state.loadings.filter(item => item !== userId),
-})

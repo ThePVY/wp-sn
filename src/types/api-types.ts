@@ -43,3 +43,17 @@ export type UserProfileDT = {
   contacts: UserContactsDT | null
   photos: UserPhotosDT | null
 }
+
+export type MessageDT = {
+  id: number
+  message: string
+  my: boolean
+}
+
+export type DialogDT = {
+  id: number
+  name: string
+  src: string
+  preview: string,
+  messages: MessageDT[]
+}

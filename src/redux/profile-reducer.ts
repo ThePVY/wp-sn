@@ -17,6 +17,7 @@ type SetUserDataT = ActionT<typeof SET_USER_DATA, UserProfileDT>
 type SetProfileStatusT = ActionT<typeof SET_PROFILE_STATUS, string>
 type SetUserIdT = ActionT<typeof SET_USER_ID, number>
 
+
 export type ProfileActionT = AddPostT | DeletePostT | SetUserDataT | SetProfileStatusT | SetUserIdT
 
 export const actionCreator = {
