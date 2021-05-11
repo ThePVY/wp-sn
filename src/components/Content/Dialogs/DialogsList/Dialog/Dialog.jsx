@@ -8,9 +8,9 @@ const Dialog = (props) => {
 
     return (
         <div className={styles.dialog}>
-            <Ava state={ props.state } />
-            <Name state={ props.state } />
-            <Preview state={ props.state.preview } />
+            <Ava {...props} />
+            <Name {...props} />
+            <Preview message={ props.dialog.messages[0].message } />
         </div>
     );
 };

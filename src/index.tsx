@@ -1,13 +1,13 @@
-import "./index.css";
-import {hot} from 'react-hot-loader/root'
-import React, { FC } from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import store from "./redux/store-redux";
-import { HashRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import { createGlobalStyle } from "styled-components";
+import './index.css'
+import { hot } from 'react-hot-loader/root'
+import { FC } from 'react'
+import ReactDOM from 'react-dom'
+import { HashRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { createGlobalStyle } from 'styled-components'
+import {} from 'styled-components/cssprop'
+import store from './redux/store-redux'
+import App from './App'
 
 const GlobalStyles = createGlobalStyle`
     * {
@@ -30,22 +30,21 @@ const GlobalStyles = createGlobalStyle`
     a.active {
       color: rgb(148, 160, 160);
     }
-`;
+`
 
 const RootContainer = () => (
-    <HashRouter hashType="slash">
-      <Provider store={store}>
-        <App />
-        <GlobalStyles />
-      </Provider>
-    </HashRouter>
+  <HashRouter hashType='slash'>
+    <Provider store={store}>
+      <App />
+      <GlobalStyles />
+    </Provider>
+  </HashRouter>
 )
 
 const render = (Component: FC) => {
   const HotWrapper = hot(Component)
-  ReactDOM.render( <HotWrapper />, document.getElementById("root") )
+  ReactDOM.render(<HotWrapper />, document.getElementById('root'))
 }
 
 render(RootContainer)
 
-reportWebVitals();

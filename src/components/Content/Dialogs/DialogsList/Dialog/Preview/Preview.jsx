@@ -1,9 +1,12 @@
 import styles from './Preview.module.css'
 
-const Preview = (props) => {
+const Preview = ({ message }) => {
+
+    const preview = message.length < 30 ? message : message.slice(0, 30)
+
     return (
         <div className={styles.preview}>
-            <span>{props.state.preview}</span>
+            <span>{preview}</span>
         </div>
     );
 };

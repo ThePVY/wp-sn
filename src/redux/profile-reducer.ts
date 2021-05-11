@@ -119,7 +119,7 @@ const initialState = {
     posts: {
         posts: [
             { id: 0, message: 'Hello', likesCount: 0 },
-            ...Array(30).map((item, idx) => (
+            ...[...new Array(30)].map((item, idx) => (
                 { id: idx + 1, message: 'Hello Hello Hello Hello Hello Hello Hello Hello Hello', likesCount: 0 }
             ))
         ],

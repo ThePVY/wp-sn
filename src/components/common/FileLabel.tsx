@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import { FC } from 'react'
+import styled from 'styled-components'
 
 const StyledFileLabel = styled.label`
   input {
@@ -19,8 +20,8 @@ const StyledFileLabel = styled.label`
 
   font-family: sans-serif;
   font-size: 0.8em;
-`;
+`
 
-const FileLabel = (props) => <StyledFileLabel {...props} />;
+const FileLabel: FC = props => <StyledFileLabel {...props} />
 
-export default FileLabel;
+export default FileLabel

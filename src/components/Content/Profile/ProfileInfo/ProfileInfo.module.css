@@ -14,14 +14,6 @@
     min-width: 250px;
 }
 
-.editProfile {
-    width: fit-content;
-    height: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-}
-
 .takePlace {
     padding: 5em;
 }

@@ -8,15 +8,18 @@ import { actionCreator } from '../../../redux/dialogs-reducer'
 import { resetForm, spinLogoOn } from '../../../redux/app-reducer'
 import SplitContent from '../../common/SplitContent/SplitContent'
 import FixedHeight from '../../common/FixedHeight/FixedHeight'
+import { useState } from 'react'
 
-const Dialogs = ({ dialogsList, messages, spinLogoOn, addMessage, resetForm }) => {
-  const propsToCD = { messages, spinLogoOn, addMessage, resetForm }
+const Dialogs = ({ dialogsList, spinLogoOn, addMessage, resetForm }) => {
+  const [dialogId, setDialogId] = useState(dialogsList[0].id)
+  const dialog = dialogsList[dialogId]
+  const propsToCD = { dialog, spinLogoOn, addMessage, resetForm }
   return (
     <FixedHeight>
       <SplitContent
         colorLeft={true}
         colorRight={false}
-        left={<DialogsList dialogsList={dialogsList} />}
+        left={<DialogsList dialogsList={dialogsList} setDialogId={setDialogId} />}
         right={<CurrentDialog {...propsToCD} />}
       />
     </FixedHeight>
@@ -25,7 +28,6 @@ const Dialogs = ({ dialogsList, messages, spinLogoOn, addMessage, resetForm }) =
 
 const mapStateToProps = state => {
   return {
-    messages: selector.dialogs.getMessages(state),
     dialogsList: selector.dialogs.getDialogsList(state),
   }
 }

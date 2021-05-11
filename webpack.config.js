@@ -13,33 +13,27 @@ const babelLoader = {
           '@babel/env',
           {
             targets: {
-              esmodules: true
-            }
-          }
+              esmodules: true,
+            },
+          },
         ],
         [
           '@babel/preset-react',
           {
-            runtime: 'automatic'
-          }
-        ]
+            runtime: 'automatic',
+          },
+        ],
       ],
-      plugins: [
-        'babel-plugin-styled-components',
-        "react-hot-loader/babel"
-      ]
-    }
-  }
+      plugins: ['babel-plugin-styled-components', 'react-hot-loader/babel'],
+    },
+  },
 }
 
 const stylesLoaders = [
   {
     test: /\.css$/,
-    use: [
-      'style-loader',
-      'css-loader'
-    ],
-    exclude: /\.module\.css$/
+    use: ['style-loader', 'css-loader'],
+    exclude: /\.module\.css$/,
   },
   {
     test: /\.css$/,
@@ -49,53 +43,45 @@ const stylesLoaders = [
         loader: 'css-loader',
         options: {
           importLoaders: 1,
-          modules: true,
           modules: {
-            localIdentName: '[name]-[path]-[hash:base64:5]',
+            localIdentName: '[local]--[name]-[hash:base64:5]',
           },
-          sourceMap: false
-        }
-      }
+          sourceMap: false,
+        },
+      },
     ],
-    include: /\.module\.css$/
+    include: /\.module\.css$/,
   },
   {
     test: /\.less$/,
-    use: [
-      'style-loader',
-      'css-loader',
-      'less-loader'
-    ]
-  }
+    use: ['style-loader', 'css-loader', 'less-loader'],
+  },
 ]
 
 module.exports = {
   mode: 'development',
-  entry: [
-    'react-hot-loader/patch',
-    path.join(__dirname, 'src', 'index.tsx'),
-  ],
+  entry: ['react-hot-loader/patch', path.join(__dirname, 'src', 'index.tsx')],
   devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
       hash: true,
       template: path.join(__dirname, 'src', 'index.html'),
       filename: 'index.html',
-      inject: 'body'
+      inject: 'body',
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      images: path.resolve(__dirname, 'src/images')
-    }
+      images: path.resolve(__dirname, 'src/images'),
+    },
   },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].[contenthash].js',
-    clean: true
+    clean: true,
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -105,26 +91,26 @@ module.exports = {
     watchContentBase: true,
     progress: true,
     hot: true,
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         use: ['source-map-loader'],
-        enforce: 'pre'
+        enforce: 'pre',
       },
       babelLoader,
       ...stylesLoaders,
       {
         test: /\.ts(x)?$/,
         use: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
-        use: ['file-loader']
-      }
-    ]
-  }
+        use: ['file-loader'],
+      },
+    ],
+  },
 }

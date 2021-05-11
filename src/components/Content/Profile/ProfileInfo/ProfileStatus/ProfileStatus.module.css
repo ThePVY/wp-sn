@@ -17,5 +17,6 @@
 
 .statusContainer span {
     word-break: break-all;
+    cursor: pointer;
 }
 
