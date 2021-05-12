@@ -24,8 +24,18 @@
     "no-use-before-define": "off",
     "arrow-parens": "off",
     "no-multiple-empty-lines": "off",
+    "class-methods-use-this": "off",
+    "space-before-function-paren": "off",
+    "arrow-body-style": "off",
+    "object-curly-newline": "off",
+    "no-bitwise": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
     "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-shadow": ["off"],
+    "@typescript-eslint/no-empty-function": "off",
+    "comma-dangle": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -40,7 +50,6 @@
     "import/no-unresolved": "off",
     "import/no-extraneous-dependencies": "off",
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-uses-react": "off",
@@ -48,6 +57,15 @@
     "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
+    "react/destructuring-assignment": ["off"],
     "jsx-quotes": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/explicit-module-boundary-types": ["error"]
+      }
+    }
+  ]
 }

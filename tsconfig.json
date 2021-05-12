@@ -16,6 +16,5 @@
       "images": ["./src/images/*"]
     }
   },
-  "exclude": ["node_modules"],
-  "include": ["src/index.d.ts"]
+  "exclude": ["node_modules"]
 }

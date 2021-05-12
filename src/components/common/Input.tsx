@@ -1,7 +1,40 @@
+import { IInputRF } from '@/types/form-types'
 import { FC } from 'react'
 import styled from 'styled-components'
 
-const StyledInput = styled.input`
+export enum InputType {
+  'button',
+  'checkbox',
+  'color',
+  'date',
+  'datetime-local',
+  'email',
+  'file',
+  'hidden',
+  'image',
+  'month',
+  'number',
+  'password',
+  'radio',
+  'range',
+  'reset',
+  'search',
+  'submit',
+  'tel',
+  'text',
+  'time',
+  'url',
+  'week',
+}
+
+interface IInputProps extends IInputRF {
+  type: keyof typeof InputType
+  placeholder: string
+  disabled: boolean
+  color: string
+}
+
+const StyledInput = styled.input<IInputProps>`
   min-width: fit-content;
   &:not(input[type='checkbox']) {
     width: 50%;
@@ -18,6 +51,6 @@ const StyledInput = styled.input`
   resize: none;
 `
 
-const Input: FC = props => <StyledInput {...props} />
+const Input: FC<IInputProps> = props => <StyledInput {...props} />
 
 export default Input
