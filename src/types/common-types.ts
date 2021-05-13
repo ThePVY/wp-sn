@@ -1,3 +1,7 @@
+export type Exclude<T, U> = T extends U ? never : T
+
+export type ItemType<P> = P[keyof P]
+
 export type ActionT<T, P> = {
   type: T
   payload?: P
@@ -21,5 +25,5 @@ export interface IWrapperF<R = void> {
 }
 
 export interface IValidate {
-  (value: string): string | undefined
+  (value: string): string | undefined | string[]
 }

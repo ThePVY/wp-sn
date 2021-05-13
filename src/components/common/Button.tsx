@@ -1,7 +1,6 @@
-import { FC } from 'react'
 import styled from 'styled-components'
 
-const StyledButton = styled.button`
+const Button = styled.button`
   background-color: rgb(255, 255, 255);
   color: rgb(39, 41, 41);
   cursor: pointer;
@@ -23,4 +22,5 @@ const StyledButton = styled.button`
     cursor: default;
   }
 `
-export const Button: FC = props => <StyledButton {...props} />
+
+export default Button

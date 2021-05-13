@@ -71,7 +71,7 @@
     "web-vitals": "^1.1.1"
   },
   "prettier": {
-    "trailingComma": "es5",
+    "trailingComma": "none",
     "tabWidth": 2,
     "useTabs": false,
     "semi": false,

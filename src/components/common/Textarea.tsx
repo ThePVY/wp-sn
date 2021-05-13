@@ -1,5 +1,4 @@
 import { IInputRF } from '@/types/form-types'
-import { FC } from 'react'
 import styled from 'styled-components'
 
 interface ITextareaProps extends IInputRF {
@@ -11,7 +10,7 @@ interface ITextareaProps extends IInputRF {
 
 type StyledTextareaT = Readonly<Partial<ITextareaProps>>
 
-const StyledTextarea = styled.textarea<StyledTextareaT>`
+const Textarea = styled.textarea<StyledTextareaT>`
   min-width: fit-content;
   width: 100%;
   background-color: rgb(252, 252, 252);
@@ -30,7 +29,5 @@ const StyledTextarea = styled.textarea<StyledTextareaT>`
     cursor: default;
   }
 `
-
-const Textarea: FC<StyledTextareaT> = props => <StyledTextarea {...props} />
 
 export default Textarea

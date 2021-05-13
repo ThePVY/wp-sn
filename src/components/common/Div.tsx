@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import styled from 'styled-components'
 
 export interface IDiv {
@@ -14,7 +13,7 @@ export interface IDiv {
 
 type DivT = Readonly<Partial<IDiv>>
 
-const StyledDiv = styled.div<DivT>`
+const Div = styled.div<DivT>`
   box-sizing: border-box;
   width: ${(props) => props.width || '100%'};
   height: ${(props) => props.height || '100%'};
@@ -25,7 +24,5 @@ const StyledDiv = styled.div<DivT>`
   color: ${(props) => props.color || 'rgb(72, 78, 78)'};
   z-index: ${(props) => props.zIndex || 'unset'};
 `
-
-const Div: FC<DivT> = props => <StyledDiv {...props} />
 
 export default Div

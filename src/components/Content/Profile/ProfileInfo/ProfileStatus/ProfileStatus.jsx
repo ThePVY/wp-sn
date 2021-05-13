@@ -56,7 +56,7 @@ const ProfileStatus = props => {
     }
   }
 
-  const publish = ({ status }) => {
+  const publish = (status) => {
     publishStatus(status)
     setEditMode(false)
   }

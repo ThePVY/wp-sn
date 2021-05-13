@@ -1,9 +1,9 @@
-import { UserPhotosDT, UserProfileDT } from '@/types/api-types';
-import { ActionT } from '@/types/common-types';
-import { ProfileStatusFormDT } from '@/types/form-types';
-import { ThunkAction } from 'redux-thunk';
-import { profileAPI } from '../api/profile-api';
-import { RootStateT } from './store-redux';
+import { UserPhotosDT, UserProfileDT } from '@/types/api-types'
+import { ActionT } from '@/types/common-types'
+import { ProfileStatusFormDT } from '@/types/form-types'
+import { ThunkAction } from 'redux-thunk'
+import { profileAPI } from '../api/profile-api'
+import { RootStateT } from './store-redux'
 
 const ADD_POST = 'profile/ADD-POST'
 const DELETE_POST = 'profile/DELETE_POST'
@@ -17,164 +17,178 @@ type SetUserDataT = ActionT<typeof SET_USER_DATA, UserProfileDT>
 type SetProfileStatusT = ActionT<typeof SET_PROFILE_STATUS, string>
 type SetUserIdT = ActionT<typeof SET_USER_ID, number>
 
-
 export type ProfileActionT = AddPostT | DeletePostT | SetUserDataT | SetProfileStatusT | SetUserIdT
 
 export const actionCreator = {
-    posts: {
-        addPost: (post: string): AddPostT => ({ type: ADD_POST, payload: post }),
-        deletePost: (postId: number): DeletePostT => ({ type: DELETE_POST, payload: postId }),
+  posts: {
+    addPost (post: string): AddPostT {
+      return { type: ADD_POST, payload: post }
     },
-    info: {
-        setUserProfileData: (data: UserProfileDT): SetUserDataT => ({ type: SET_USER_DATA, payload: data }),
-        setProfileStatus: (status: string): SetProfileStatusT => ({ type: SET_PROFILE_STATUS, payload: status })
-    },
-    common: {
-        setUserId: (userId: number): SetUserIdT => ({ type: SET_USER_ID, payload: userId })
+    deletePost (postId: number): DeletePostT {
+      return { type: DELETE_POST, payload: postId }
     }
+  },
+  info: {
+    setUserProfileData (data: UserProfileDT): SetUserDataT {
+      return {
+        type: SET_USER_DATA,
+        payload: data
+      }
+    },
+    setProfileStatus (status: string): SetProfileStatusT {
+      return {
+        type: SET_PROFILE_STATUS,
+        payload: status
+      }
+    }
+  },
+  common: {
+    setUserId (userId: number): SetUserIdT {
+      return { type: SET_USER_ID, payload: userId }
+    }
+  }
 }
 
-export const getProfileAC = () => actionCreator
-
+export const getProfileAC = (): typeof actionCreator => actionCreator
 
 type ThunkActionT<R = void> = ThunkAction<R, RootStateT, undefined, ProfileActionT>
 
 export const thunkCreator = {
-    getProfileData(userId: number): ThunkActionT {
-        return async dispatch => {
-            if (!userId) return
-            try {
-                const data = await profileAPI.getProfileData(userId)
-                dispatch(actionCreator.info.setUserProfileData(data))
-                dispatch(actionCreator.common.setUserId(userId))
-            }
-            catch (err) {
-                console.log(err)
-            }
-        }
-    },
-    getProfileStatus(userId: number): ThunkActionT {
-        return async dispatch => {
-            if (!userId) return
-            try {
-                const status = await profileAPI.getProfileStatus(userId)
-                dispatch(actionCreator.info.setProfileStatus(status ? status : undefined))
-            }
-            catch (err) {
-                console.log(err)
-            }
-        }
-    },
-    putProfileStatus(statusObj: ProfileStatusFormDT): ThunkActionT {
-        return async dispatch => {
-            if ('status' in statusObj === false) return
-            try {
-                const data = await profileAPI.putProfileStatus(statusObj)
-                if (data.resultCode === 0) {
-                    dispatch(actionCreator.info.setProfileStatus(statusObj.status))
-                }
-            }
-            catch (err) {
-                console.log(err)
-            }
-        }
-    },
-    uploadProfilePhoto(photo: UserPhotosDT, authId: number): ThunkActionT {
-        return async dispatch => {
-            try {
-                const data = await profileAPI.putProfileImage(photo)
-                if (data.resultCode === 0) {
-                    dispatch(thunkCreator.getProfileData(authId))
-                }
-            }
-            catch (err) {
-                console.log(err)
-            }
-        }
-    },
-    putProfileInfo(info: UserProfileDT): ThunkActionT {
-        return async (dispatch, getState) => {
-            try {
-                const userId = getState().auth.data.id
-                const obj = { ...info, userId }
-                const data = await profileAPI.putProfileInfo(obj)
-                if (data.resultCode === 0) {
-                    const profileData = await profileAPI.getProfileData(userId)
-                    dispatch(actionCreator.info.setUserProfileData(profileData))
-                }
-                else {
-                    console.log(data)
-                }
-            }
-            catch (err) {
-                console.log(err)
-            }
-        }
+  getProfileData (userId: number): ThunkActionT {
+    return async dispatch => {
+      if (!userId) return
+      try {
+        const data = await profileAPI.getProfileData(userId)
+        dispatch(actionCreator.info.setUserProfileData(data))
+        dispatch(actionCreator.common.setUserId(userId))
+      } catch (err) {
+        console.log(err)
+      }
     }
+  },
+  getProfileStatus (userId: number): ThunkActionT {
+    return async dispatch => {
+      if (!userId) return
+      try {
+        const status = await profileAPI.getProfileStatus(userId)
+        dispatch(actionCreator.info.setProfileStatus(status))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
+  putProfileStatus (statusObj: ProfileStatusFormDT): ThunkActionT {
+    return async dispatch => {
+      if ('status' in statusObj === false) return
+      try {
+        const data = await profileAPI.putProfileStatus(statusObj)
+        if (data.resultCode === 0) {
+          dispatch(actionCreator.info.setProfileStatus(statusObj.status))
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
+  uploadProfilePhoto (photo: UserPhotosDT, authId: number): ThunkActionT {
+    return async dispatch => {
+      try {
+        const data = await profileAPI.putProfileImage(photo)
+        if (data.resultCode === 0) {
+          dispatch(thunkCreator.getProfileData(authId))
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
+  putProfileInfo (info: UserProfileDT): ThunkActionT {
+    return async (dispatch, getState) => {
+      try {
+        const userId = getState().auth.data.id
+        const obj = { ...info, userId }
+        const data = await profileAPI.putProfileInfo(obj)
+        if (data.resultCode === 0) {
+          const profileData = await profileAPI.getProfileData(userId)
+          dispatch(actionCreator.info.setUserProfileData(profileData))
+        } else {
+          console.log(data)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
 }
 
-
-//initial value of state
+//  initial value of state
 const initialState = {
-    posts: {
-        posts: [
-            { id: 0, message: 'Hello', likesCount: 0 },
-            ...[...new Array(30)].map((item, idx) => (
-                { id: idx + 1, message: 'Hello Hello Hello Hello Hello Hello Hello Hello Hello', likesCount: 0 }
-            ))
-        ],
-    },
-    info: {
-        data: undefined as UserProfileDT,
-        status: undefined as string
-    },
-    userId: undefined as number
+  posts: {
+    posts: [
+      { id: 0, message: 'Hello', likesCount: 0 },
+      ...[...new Array(30)].map((item, idx) => ({
+        id: idx + 1,
+        message: 'Hello Hello Hello Hello Hello Hello Hello Hello Hello',
+        likesCount: 0
+      }))
+    ]
+  },
+  info: {
+    data: undefined as UserProfileDT,
+    status: undefined as string
+  }
 }
 
-type ProfileStateT = typeof initialState
+export type ProfileStateT = typeof initialState
 
-
-//for changing state in store
+//  for changing state in store
 export const profileReducer = (state = initialState, action: ProfileActionT): ProfileStateT => {
-    switch (action.type) {
-        case ADD_POST:
-            return addPost(state, action.payload)
+  switch (action.type) {
+    case ADD_POST:
+      return addPost(state, action.payload)
 
-        case DELETE_POST:
-            return deletePost(state, action.payload)
+    case DELETE_POST:
+      return deletePost(state, action.payload)
 
-        case SET_USER_DATA:
-            return { ...state, info: { ...state.info, data: action.payload } }
+    case SET_USER_DATA:
+      return { ...state, info: { ...state.info, data: action.payload } }
 
-        case SET_USER_ID:
-            return { ...state, userId: action.payload }
+    case SET_USER_ID:
+      return {
+        ...state,
+        info: {
+          ...state.info,
+          data: { ...state.info.data, userId: action.payload }
+        }
+      }
 
-        case SET_PROFILE_STATUS:
-            return { ...state, info: { ...state.info, status: action.payload } }
+    case SET_PROFILE_STATUS:
+      return { ...state, info: { ...state.info, status: action.payload } }
 
-        default:
-            return state
-    }
+    default:
+      return state
+  }
 }
-
 
 /*---------------------------------------------------------------------------------*/
 
 const addPost = (state: ProfileStateT, payload: string): ProfileStateT => {
-    const posts = state.posts.posts
-    const newPost = {
-        id: posts[posts.length - 1].id + 1,
-        message: payload,
-        likesCount: 0
-    }
+  const { posts } = state.posts
+  const newPost = {
+    id: posts[posts.length - 1].id + 1,
+    message: payload,
+    likesCount: 0
+  }
 
-    return {
-        ...state, posts: { posts: [...posts, newPost] }
-    }
+  return {
+    ...state,
+    posts: { posts: [...posts, newPost] }
+  }
 }
 
 const deletePost = (state: ProfileStateT, payload: number): ProfileStateT => {
-    return {
-        ...state, posts: { posts: state.posts.posts.filter((post) => post.id !== payload) }
-    }
+  return {
+    ...state,
+    posts: { posts: state.posts.posts.filter(post => post.id !== payload) }
+  }
 }

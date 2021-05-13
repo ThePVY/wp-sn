@@ -34,7 +34,9 @@ interface IInputProps extends IInputRF {
   color: string
 }
 
-const StyledInput = styled.input<IInputProps>`
+type InputTypeT = Readonly<Partial<IInputProps>>
+
+const StyledInput = styled.input<InputTypeT>`
   min-width: fit-content;
   &:not(input[type='checkbox']) {
     width: 50%;
@@ -51,6 +53,6 @@ const StyledInput = styled.input<IInputProps>`
   resize: none;
 `
 
-const Input: FC<IInputProps> = props => <StyledInput {...props} />
+const Input: FC<InputTypeT> = props => <StyledInput {...props} />
 
 export default Input

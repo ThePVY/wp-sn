@@ -24,7 +24,7 @@ type ThunkActionT<R = void> = ThunkAction<Promise<R>, RootStateT, undefined, Aut
 
 export const thunkCreator = {
   getAuthData (): ThunkActionT<Promise<number>> {
-    return async (dispatch) => {
+    return async dispatch => {
       try {
         const data = await authAPI.getAuthData()
         if (data.resultCode === 0) {
@@ -39,7 +39,7 @@ export const thunkCreator = {
     }
   },
   signIn (jsonData: LoginFormDT): ThunkActionT {
-    return async (dispatch) => {
+    return async dispatch => {
       try {
         const data = await authAPI.signIn(jsonData)
         if (data.resultCode === 0) dispatch(initializeApp())
@@ -53,7 +53,7 @@ export const thunkCreator = {
     }
   },
   signOut (): ThunkActionT {
-    return async (dispatch) => {
+    return async dispatch => {
       try {
         const data = await authAPI.signOut()
         if (data.resultCode === 0) {
@@ -83,9 +83,9 @@ const initialState = {
   } as AuthMeDT,
 }
 
-type AuthState = typeof initialState
+export type AuthStateT = typeof initialState
 
-export const authReducer = (state = initialState, action: AuthActionT): AuthState => {
+export const authReducer = (state = initialState, action: AuthActionT): AuthStateT => {
   switch (action.type) {
     case SET_AUTH_DATA:
       return {

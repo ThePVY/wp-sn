@@ -1,29 +1,16 @@
-import { IValidate } from '@/types/common-types'
-import { IInputRF, IMetaRF } from '@/types/form-types'
-import { FC, ReactElement, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { Field } from 'redux-form'
 import styled from 'styled-components'
 import Div from '../Div'
-import StyledInput, { InputType } from '../Input'
+import StyledInput from '../Input'
 import Textarea from '../Textarea'
+import { ICreateFieldInput, IFieldTemplateProps, IInputProps, ITextareaProps } from './CustomFieldsTs'
 
 const StyledSpan = styled.span`
   padding: 0px 1rem;
 `
 
-interface ICreateFieldInput {
-  component: FC
-  name: string
-  type: string
-  placeholder?: string
-  validate?: IValidate[]
-  isValid?: (valid: boolean) => void
-  isChecked?: (checked: boolean) => void
-  disabled?: boolean
-  text?: string
-}
-
-export const createField = ({ text = '', ...other }: ICreateFieldInput): ReactElement => {
+export const createField = ({ text = '', ...other }: ICreateFieldInput): JSX.Element => {
   return (
     <Div height='fit-content'>
       <Field {...other} />
@@ -36,14 +23,10 @@ const ErrorSpan = styled.span<{ error?: boolean }>`
   color: ${props => (props.error ? 'rgb(95, 29, 29)' : 'inherit')};
 `
 
-interface IFieldTemplateProps extends ITemplateProps {
-  notified: boolean
-}
-
 export const FieldTemplate: FC<IFieldTemplateProps> = ({
   input,
   meta,
-  notified,
+  notified = false,
   children,
   isValid,
   isChecked,
@@ -66,40 +49,18 @@ export const FieldTemplate: FC<IFieldTemplateProps> = ({
   )
 }
 
-interface ITemplateProps {
-  input: IInputRF
-  meta: IMetaRF
-  type?: string
-  placeholder?: string
-  notified?: boolean
-  disabled?: boolean
-  isValid?: (valid: boolean) => void
-  isChecked?: (checked: boolean) => void
-}
-
-export const TextareaTemplate: FC<ITemplateProps> = ({ type, placeholder, notified, ...props }) => {
+export const TextareaTemplate: FC<ITextareaProps> = ({ type, placeholder, ...props }) => {
   return (
-    <FieldTemplate {...props} notified={notified}>
+    <FieldTemplate {...props} notified>
       <Textarea {...props.input} placeholder={placeholder} type={type} disabled={props.disabled} />
     </FieldTemplate>
   )
 }
 
-interface IInputProps {
-  input: IInputRF
-  meta: IMetaRF
-  type?: keyof typeof InputType
-  placeholder?: string
-  notified?: boolean
-  disabled?: boolean
-  isValid?: (valid: boolean) => void
-  isChecked?: (checked: boolean) => void
-}
-
-export const Input: FC<IInputProps> = ({ type, placeholder, notified, ...props }) => {
+export const Input: FC<IInputProps> = ({ type, placeholder, disabled, input, ...other }) => {
   return (
-    <FieldTemplate {...props} notified={notified}>
-      <StyledInput {...props.input} placeholder={placeholder} type={type} />
+    <FieldTemplate {...other} input={input} notified>
+      <StyledInput type={type} placeholder={placeholder} disabled={disabled} {...input} />
     </FieldTemplate>
   )
 }

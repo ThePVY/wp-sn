@@ -89,7 +89,7 @@ const ProfileInfo = ({
             <ViewPanel
               isShown={editMode}
               content={<AddProfileInfoForm onSubmit={putProfileInfo} />}
-              fixed={true}
+              fixed
               onClose={closePanel}
             />
           ) : (

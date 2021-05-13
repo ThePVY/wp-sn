@@ -1,6 +1,5 @@
 import { UserDT } from '@/types/api-types'
 import { ActionT } from '@/types/common-types'
-import { Dispatch } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { usersAPI } from '../api/users-api'
 import { RootStateT } from './store-redux'
@@ -64,13 +63,13 @@ export const actionCreator = {
 
 export type UsersACT = typeof actionCreator
 
-export const getUsersAC = () => actionCreator
+export const getUsersAC = (): UsersACT => actionCreator
 
 type ThunkActionT<R = void> = ThunkAction<R, RootStateT, undefined, UsersActionT>
 
 export const thunkCreator = {
   getUsers (p: number): ThunkActionT {
-    return async (dispatch) => {
+    return async dispatch => {
       try {
         dispatch(actionCreator.usersList.toggleIsFetching(true))
         const data = await usersAPI.getUsers(p)
@@ -84,7 +83,7 @@ export const thunkCreator = {
     }
   },
   setFollow (userId: number, followed: boolean): ThunkActionT {
-    return async (dispatch) => {
+    return async dispatch => {
       try {
         dispatch(actionCreator.usersList.toggleIsFetching(true))
         dispatch(actionCreator.usersList.setLoadings(userId, true))
@@ -101,7 +100,6 @@ export const thunkCreator = {
   },
 }
 
-//initial state of users page
 const initialState = {
   usersList: [] as UserDT[],
   showMore: false,
@@ -120,9 +118,9 @@ export const usersReducer = (state = initialState, action: UsersActionT): UsersS
     case FOLLOW_CLICK:
       return {
         ...state,
-        usersList: state.usersList.map(user => (
+        usersList: state.usersList.map(user =>
           user.id === action.payload ? { ...user, followed: !user.followed } : user
-        )),
+        ),
       }
 
     case SET_USERS:

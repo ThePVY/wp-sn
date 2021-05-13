@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import styled from 'styled-components'
 import Div from './Div'
 
@@ -12,7 +11,7 @@ interface IFlex {
 
 type FlexT = Readonly<Partial<IFlex>>
 
-const StyledFlex = styled(Div)<FlexT>`
+const FlexContainer = styled(Div)<FlexT>`
   display: flex;
   flex-wrap: ${props => props.wrap || 'nowrap'};
   flex-direction: ${props => props.dir || 'row'};
@@ -20,7 +19,5 @@ const StyledFlex = styled(Div)<FlexT>`
   justify-content: ${props => props.jstfCnt || 'stretch'};
   align-items: ${props => props.algnItems || 'stretch'};
 `
-
-const FlexContainer: FC<FlexT> = props => <StyledFlex {...props} />
 
 export default FlexContainer

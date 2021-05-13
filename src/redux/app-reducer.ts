@@ -11,17 +11,16 @@ const SET_SPIN_LOGO = 'app/SET_SPIN_LOGO'
 type SetInitializedT = ActionT<typeof SET_INITIALIZED, null>
 type SetSpinLogoT = ActionT<typeof SET_SPIN_LOGO, boolean>
 
-type AppPureActionT = SetInitializedT | SetSpinLogoT
+type AppActionT = SetInitializedT | SetSpinLogoT
 
-//for construct action in components
 export const actionCreator = {
   setInitialized: (): SetInitializedT => ({ type: SET_INITIALIZED }),
   setSpinLogo: (spin: boolean): SetSpinLogoT => ({ type: SET_SPIN_LOGO, payload: spin }),
 }
 
-type ThunkActionT<R> = ThunkAction<R, RootStateT, undefined, AppPureActionT>
+type ThunkActionT<R> = ThunkAction<R, RootStateT, undefined, AppActionT>
 
-export const initializeApp = (): ThunkActionT<Promise<void>> => async (dispatch) => {
+export const initializeApp = (): ThunkActionT<Promise<void>> => async dispatch => {
   try {
     const userId = await dispatch(authTC.getAuthData())
 
@@ -38,7 +37,10 @@ export const initializeApp = (): ThunkActionT<Promise<void>> => async (dispatch)
   }
 }
 
-export const spinLogoOn = (dispatchWrapper: IWrapperF): ThunkActionT<void> => (dispatch, getState) => {
+export const spinLogoOn = (dispatchWrapper: IWrapperF): ThunkActionT<void> => (
+  dispatch,
+  getState
+) => {
   dispatchWrapper()
   dispatch(actionCreator.setSpinLogo(true))
   setTimeout(() => {
@@ -47,17 +49,15 @@ export const spinLogoOn = (dispatchWrapper: IWrapperF): ThunkActionT<void> => (d
   }, 1500)
 }
 
-
 export const resetForm = (form: string): ThunkActionT<void> => dispatch => dispatch(reset(form))
-
 
 const initialState = {
   initialized: false,
   spinLogo: false,
 }
-export type AppPartialStateT = typeof initialState
+export type AppStateT = typeof initialState
 
-export const appReducer = (state = initialState, action: AppPureActionT): AppPartialStateT => {
+export const appReducer = (state = initialState, action: AppActionT): AppStateT => {
   switch (action.type) {
     case SET_INITIALIZED:
       return { ...state, initialized: true }
