@@ -3,13 +3,13 @@ import { ProfilePhotos, ProfilePosts } from '@/redux/selectors'
 import Hover from '../../../../common/Hover/Hover'
 import s from './Post.module.css'
 import defaultImage from 'images/user-image.png'
-import { ItemType } from '@/types/common-types'
+import { ItemTypeOf } from '@/types/common-types'
 
 interface IPostProps {
   iam: boolean
   photos: ProfilePhotos
   deletePost: (event?: Event) => void
-  post: ItemType<ProfilePosts['posts']>
+  post: ItemTypeOf<ProfilePosts['posts']>
 }
 
 const Post: FC<IPostProps> = ({ iam, photos, deletePost, post: { likesCount, message } }) => {

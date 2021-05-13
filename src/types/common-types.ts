@@ -1,6 +1,6 @@
 export type Exclude<T, U> = T extends U ? never : T
 
-export type ItemType<P> = P[keyof P]
+export type ItemTypeOf<P extends any[]> = P[number]
 
 export type ActionT<T, P> = {
   type: T
