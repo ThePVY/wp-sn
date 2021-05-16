@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { InputType } from '../Input';
 
 
-export interface ICreateFieldInput {
+export interface ICreateFieldInput extends ITemplateObservers {
   component: FC
   name: string
   validate?: IValidate[]
@@ -12,8 +12,6 @@ export interface ICreateFieldInput {
   type: string
   placeholder?: string
   disabled?: boolean
-  isValid?: (valid: boolean) => void
-  isChecked?: (checked: boolean) => void
 }
 
 export interface IFieldTemplateProps extends ITemplateProps {

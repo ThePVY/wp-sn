@@ -12,7 +12,7 @@ import selector, {
   ProfileStatus,
   ProfileUserId
 } from '@/redux/selectors'
-import { ProfileStatusFormDT } from '@/types/form-types'
+import { StatusFormDT } from '@/types/form-types'
 import { RootStateT } from '@/redux/store-redux'
 import { actionCreator as profileAC, thunkCreator as profileTC } from '@/redux/profile-reducer'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
@@ -32,13 +32,13 @@ interface IStateProps {
 type DispatchPropsT = typeof profileTC &
   typeof profileAC.posts & { resetForm: typeof resetForm } & { spinLogoOn: typeof spinLogoOn }
 
-type PropsT = IStateProps & DispatchPropsT & RouteComponentProps<IProfileRouteParams>
+export type ProfilePropsT = IStateProps & DispatchPropsT & RouteComponentProps<IProfileRouteParams>
 
 interface IProfileRouteParams {
   userId: string
 }
 
-const Profile: FC<PropsT> = props => {
+const Profile: FC<ProfilePropsT> = (props) => {
   const { authId, getProfileData, getProfileStatus } = props
   const { userId = authId } = props.match.params
   const id = Number(userId)
@@ -48,7 +48,7 @@ const Profile: FC<PropsT> = props => {
     getProfileData(id)
   }, [authId, id, getProfileData, getProfileStatus])
 
-  const publishStatus = (status: ProfileStatusFormDT) => {
+  const publishStatus = (status: StatusFormDT) => {
     const { putProfileStatus, resetForm } = props
     putProfileStatus(status)
     resetForm('status')

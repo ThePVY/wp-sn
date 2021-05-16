@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { withRouter } from 'react-router'
-import { change, Field, reduxForm } from 'redux-form'
+import { change, reduxForm } from 'redux-form'
 import { useValidation } from '../../../../../hooks/useValidation'
 import { noErrorRequired, validate50 } from '../../../../../scripts/validates'
-import { Button } from '../../../../common/Button'
-import { TextareaTemplate } from '../../../../common/CustomFields/CustomFields'
+import Button from '../../../../common/Button'
+import { createField, TextareaTemplate } from '../../../../common/CustomFields/CustomFields'
 import styles from './ProfileStatus.module.css'
 
 
@@ -19,17 +19,15 @@ let StatusForm = props => {
 
   return (
     <form className={styles.statusForm} onSubmit={handleSubmit}>
-      <div>
-        <Field
-          component={TextareaTemplate}
-          name='status'
-          type='text'
-          autoFocus
-          placeholder='Enter your Status'
-          validate={[noErrorRequired, validate50]}
-          isValid={statusVO.setIsValid}
-        />
-      </div>
+      {createField({
+        component: TextareaTemplate,
+          name: 'status',
+          type: 'text',
+          autoFocus: true,
+          placeholder: 'Enter your Status',
+          validate: [noErrorRequired, validate50],
+          isValid: statusVO.setIsValid
+      })}
       <div className={styles.buttonsContainer}>
         <Button type='submit' disabled={!statusVO.isValid}>
           Publish

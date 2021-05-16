@@ -2,7 +2,7 @@ import defaultUserImage from '../../../../../images/user-image.png'
 import { Field, reduxForm } from 'redux-form';
 import { noErrorRequired } from '../../../../../scripts/validates';
 import { useState } from 'react';
-import { Button } from '../../../../common/Button';
+import Button from '../../../../common/Button';
 import styled, { keyframes } from 'styled-components'
 import arrowUp from '../../../../../images/arrow-icon-up.png'
 import arrowDown from '../../../../../images/arrow-icon-down.png'

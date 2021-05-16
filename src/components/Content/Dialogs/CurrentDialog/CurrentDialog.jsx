@@ -1,11 +1,11 @@
-import { Button } from '@/components/common/Button'
+import Button from '@/components/common/Button'
 import Div from '@/components/common/Div'
 import FlexContainer from '@/components/common/FlexContainer'
-import { Field, reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form'
 import styled from 'styled-components'
 import { useValidation } from '../../../../hooks/useValidation'
 import { noErrorRequired, validate100 } from '../../../../scripts/validates'
-import { TextareaTemplate } from '../../../common/CustomFields/CustomFields'
+import { createField, TextareaTemplate } from '../../../common/CustomFields/CustomFields'
 import Message from './Message/Message'
 
 const DialogWrapper = styled(FlexContainer)`
@@ -27,7 +27,6 @@ const CurrentDialog = ({ dialog, spinLogoOn, addMessage, resetForm }) => {
     spinLogoOn(() => addMessage(dialog.id, message))
     resetForm('message')
   }
-
   return (
     <DialogWrapper dir='column'>
       <MessagesWrapper dir='column-reverse' >
@@ -49,18 +48,16 @@ let MessageForm = props => {
 
   return (
     <form onSubmit={props.handleSubmit}>
-      <div>
-        <Field
-          component={TextareaTemplate}
-          name='message'
-          type='text'
-          placeholder='Enter your message'
-          validate={[noErrorRequired, validate100]}
-          isValid={messageVO.setIsValid}
-        />
-      </div>
-      <Div width='30%'>
-        <Button type='submit' disabled={!messageVO.isValid}>
+      {createField({
+        component: TextareaTemplate,
+        name: 'message',
+        type: 'text',
+        placeholder: 'Enter your message',
+        validate: [noErrorRequired, validate100],
+        isValid: messageVO.setIsValid
+      })}
+      <Div width="30%">
+        <Button type="submit" disabled={!messageVO.isValid}>
           Send Message
         </Button>
       </Div>

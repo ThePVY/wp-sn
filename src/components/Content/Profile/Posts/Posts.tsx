@@ -1,18 +1,22 @@
-import { UserPhotosDT } from '@/types/api-types'
-import { IWrapperF } from '@/types/common-types'
 import Div from '@/components/common/Div'
 import PostForm from './PostForm'
 import Post from './Post/Post'
+import { FC } from 'react'
+import { ProfilePropsT } from '../Profile'
+import { PostFormDT } from '@/types/form-types'
 
 interface IPostsProps {
-  userName: string
-  photos: UserPhotosDT
+  userName: ProfilePropsT['userName']
+  photos: ProfilePropsT['photos']
   iam: boolean
-  spinLogoOn: IWrapperF
-  addPost: 
+  spinLogoOn: ProfilePropsT['spinLogoOn']
+  addPost: ProfilePropsT['addPost']
+  deletePost: ProfilePropsT['deletePost']
+  resetForm: ProfilePropsT['resetForm']
+  posts: ProfilePropsT['posts']
 }
 
-const Posts = ({
+const Posts: FC<IPostsProps> = ({
   userName = '...',
   photos,
   iam = false,
@@ -22,7 +26,7 @@ const Posts = ({
   resetForm,
   posts: { posts },
 }) => {
-  const handleSubmit = ({ post }) => {
+  const handleSubmit = ({ post }: PostFormDT) => {
     spinLogoOn(() => addPost(post))
     resetForm('post')
   }

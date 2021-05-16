@@ -33,7 +33,7 @@ const GlobalStyles = createGlobalStyle`
 `
 
 const RootContainer = () => (
-  <HashRouter hashType='slash'>
+  <HashRouter hashType="slash">
     <Provider store={store}>
       <App />
       <GlobalStyles />
@@ -47,4 +47,3 @@ const render = (Component: FC) => {
 }
 
 render(RootContainer)
-

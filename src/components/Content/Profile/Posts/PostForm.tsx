@@ -38,4 +38,6 @@ const PurePostForm: FC<InjectedProps> = props => {
   )
 }
 
-export default reduxForm({ form: 'post' })(PurePostForm)
+const PostForm = reduxForm({ form: 'post' })(PurePostForm)
+
+export default PostForm

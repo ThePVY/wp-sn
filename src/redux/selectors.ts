@@ -50,11 +50,11 @@ const selector = {
   },
   profile: {
     getData: (state: RootStateT): ProfileData => state.profile.info.data,
-    getUserName: (state: RootStateT): ProfileFullName => state.profile.info.data.fullName,
+    getUserName: (state: RootStateT): ProfileFullName => state.profile.info.data?.fullName,
     getStatus: (state: RootStateT): ProfileStatus => state.profile.info.status,
-    getPhotos: (state: RootStateT): ProfilePhotos => state.profile.info.data.photos,
+    getPhotos: (state: RootStateT): ProfilePhotos => state.profile.info.data?.photos,
     getPosts: (state: RootStateT): ProfilePosts => state.profile.posts,
-    getUserId: (state: RootStateT): ProfileUserId => state.profile.info.data.userId,
+    getUserId: (state: RootStateT): ProfileUserId => state.profile.info.data?.userId,
   },
   users: {
     getUsersList: (state: RootStateT): UsersList => state.users.usersList,

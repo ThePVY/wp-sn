@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react'
 import { Field } from 'redux-form'
 import styled from 'styled-components'
 import Div from '../Div'
-import StyledInput from '../Input'
+import Input from '../Input'
 import Textarea from '../Textarea'
 import { ICreateFieldInput, IFieldTemplateProps, IInputProps, ITextareaProps } from './CustomFieldsTs'
 
@@ -28,10 +28,10 @@ export const FieldTemplate: FC<IFieldTemplateProps> = ({
   meta,
   notified = false,
   children,
-  isValid,
-  isChecked,
+  isValid = () => {},
+  isChecked = () => {},
 }) => {
-  let notification = ''
+  let notification
   if (meta.touched && notified) {
     notification = meta.error || ''
   }
@@ -49,18 +49,18 @@ export const FieldTemplate: FC<IFieldTemplateProps> = ({
   )
 }
 
-export const TextareaTemplate: FC<ITextareaProps> = ({ type, placeholder, ...props }) => {
+export const TextareaTemplate: FC<ITextareaProps> = ({ type, placeholder, disabled, input, ...other }) => {
   return (
-    <FieldTemplate {...props} notified>
-      <Textarea {...props.input} placeholder={placeholder} type={type} disabled={props.disabled} />
+    <FieldTemplate {...other} input={input} notified>
+      <Textarea type={type} placeholder={placeholder} disabled={disabled} {...input} />
     </FieldTemplate>
   )
 }
 
-export const Input: FC<IInputProps> = ({ type, placeholder, disabled, input, ...other }) => {
+export const InputTemplate: FC<IInputProps> = ({ type, placeholder, disabled, input, ...other }) => {
   return (
     <FieldTemplate {...other} input={input} notified>
-      <StyledInput type={type} placeholder={placeholder} disabled={disabled} {...input} />
+      <Input type={type} placeholder={placeholder} disabled={disabled} {...input} />
     </FieldTemplate>
   )
 }

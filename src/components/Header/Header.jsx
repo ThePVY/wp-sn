@@ -1,6 +1,6 @@
 import logo from "images/logo.png";
 import { NavLink } from "react-router-dom";
-import { Button } from "../common/Button";
+import Button from "../common/Button";
 import styled, { css, keyframes } from "styled-components";
 import Div from "../common/Div";
 import FlexContainer from "../common/FlexContainer";

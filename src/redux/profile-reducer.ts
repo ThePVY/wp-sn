@@ -1,6 +1,6 @@
 import { UserPhotosDT, UserProfileDT } from '@/types/api-types'
 import { ActionT } from '@/types/common-types'
-import { ProfileStatusFormDT } from '@/types/form-types'
+import { StatusFormDT } from '@/types/form-types'
 import { ThunkAction } from 'redux-thunk'
 import { profileAPI } from '../api/profile-api'
 import { RootStateT } from './store-redux'
@@ -77,7 +77,7 @@ export const thunkCreator = {
       }
     }
   },
-  putProfileStatus (statusObj: ProfileStatusFormDT): ThunkActionT {
+  putProfileStatus (statusObj: StatusFormDT): ThunkActionT {
     return async dispatch => {
       if ('status' in statusObj === false) return
       try {

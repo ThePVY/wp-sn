@@ -3,7 +3,7 @@ import arrowRight from '../../../images/arrow-icon-right.png'
 import arrowLeft from '../../../images/arrow-icon-left.png'
 import styled from 'styled-components'
 import Div from '../Div'
-import { Button } from '../Button'
+import Button from '../Button'
 import FlexContainer from '../FlexContainer'
 
 

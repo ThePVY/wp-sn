@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux'
+import { UserContactsDT, UserPhotosDT } from './api-types'
 
 export type LoginFormDT = {
   login: string
@@ -6,9 +7,19 @@ export type LoginFormDT = {
   rememberMe: boolean
 }
 
-export type ProfileStatusFormDT = {
-  status: string
+export type StatusFormDT = { status: string }
+
+export type PostFormDT = { post: string }
+
+export type ProfileInfoFormDT = {
+  fullName: string
+  aboutMe: string
+  lookingForAJob: boolean
+  lookingForAJobDescription: string | null
+  contacts: UserContactsDT
 }
+
+export type AvaFormDT = { photo: UserPhotosDT }
 
 export interface IInputRF<T = string> {
   checked: boolean

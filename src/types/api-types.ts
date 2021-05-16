@@ -1,3 +1,5 @@
+import { ProfileInfoFormDT } from './form-types'
+
 export type AuthMeDT = {
   id: number
   email: string
@@ -25,6 +27,7 @@ export type UserDT = {
 }
 
 export type UserContactsDT = {
+  [index: string]: string | null
   github: string | null
   vk: string | null
   facebook: string | null
@@ -35,12 +38,8 @@ export type UserContactsDT = {
   mainLink: string | null
 }
 
-export type UserProfileDT = {
+export interface UserProfileDT extends ProfileInfoFormDT {
   userId: number
-  lookingForAJob: boolean
-  lookingForAJobDescription: string | null
-  fullName: string | null
-  contacts: UserContactsDT | null
   photos: UserPhotosDT | null
 }
 
@@ -54,6 +53,6 @@ export type DialogDT = {
   id: number
   name: string
   src: string
-  preview: string,
+  preview: string
   messages: MessageDT[]
 }

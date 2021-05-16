@@ -1,15 +1,15 @@
 import { FC } from 'react'
-import { ProfilePhotos, ProfilePosts } from '@/redux/selectors'
 import Hover from '../../../../common/Hover/Hover'
 import s from './Post.module.css'
 import defaultImage from 'images/user-image.png'
 import { ItemTypeOf } from '@/types/common-types'
+import { ProfilePropsT } from '../../Profile'
 
-interface IPostProps {
+export interface IPostProps {
   iam: boolean
-  photos: ProfilePhotos
+  photos: ProfilePropsT['photos']
   deletePost: (event?: Event) => void
-  post: ItemTypeOf<ProfilePosts['posts']>
+  post: ItemTypeOf<ProfilePropsT['posts']['posts']>
 }
 
 const Post: FC<IPostProps> = ({ iam, photos, deletePost, post: { likesCount, message } }) => {
