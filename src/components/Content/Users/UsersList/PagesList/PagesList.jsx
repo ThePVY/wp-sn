@@ -4,6 +4,7 @@ import { reduxForm } from 'redux-form'
 import { createField, InputTemplate } from '../../../../common/CustomFields/CustomFields'
 import { noErrorRequired, validateNum } from '../../../../../scripts/validates'
 import { useValidation } from '../../../../../hooks/useValidation'
+import Button from '@/components/common/Button'
 
 const PagesList = (props) => {
   const { pagesCount, selectedPage, isFetching } = props
@@ -79,18 +80,18 @@ let PageSearchForm = ({ handleSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className={s.pageSearchForm}>
-      {createField(
-        InputTemplate,
-        'page',
-        'text',
-        'Enter page',
-        [validateNum, noErrorRequired],
-        pageVO.setIsValid
-      )}
+      {createField({
+        component: InputTemplate,
+        name: 'page',
+        type: 'number',
+        placeholder: 'Enter page',
+        validate: [validateNum, noErrorRequired],
+        isValid: pageVO.setIsValid
+      })}
       <div>
-        <button type="submit" disabled={!pageVO.isValid}>
+        <Button type="submit" disabled={!pageVO.isValid}>
           Go!
-        </button>
+        </Button>
       </div>
     </form>
   )

@@ -1,7 +1,6 @@
-import User from "./User/User";
-import styles from "./UsersList.module.css";
-import React from "react";
-import PagesList from "./PagesList/PagesList";
+import User from './User/User'
+import styles from './UsersList.module.css'
+import PagesList from './PagesList/PagesList'
 
 const UsersList = ({
   usersList,
@@ -11,16 +10,16 @@ const UsersList = ({
   loadings,
   onFollowClick,
   onPageClick,
-  resetForm,
+  resetForm
 }) => {
   const pageListProps = {
     onPageClick,
     pagesCount,
     selectedPage,
     isFetching,
-    resetForm,
-  };
-  const userProps = { onFollowClick, loadings };
+    resetForm
+  }
+  const userProps = { onFollowClick, loadings }
 
   return (
     <div className={styles.usersList}>
@@ -30,7 +29,7 @@ const UsersList = ({
       ))}
       <PagesList {...pageListProps} />
     </div>
-  );
-};
+  )
+}
 
-export default UsersList;
+export default UsersList
