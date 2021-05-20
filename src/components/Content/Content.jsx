@@ -14,9 +14,9 @@ const News = lazy(() => import('./News/News'))
 const Images = lazy(() => import('./Images/Images'))
 
 const Content = ({ initialized = false, initializeApp }) => {
-  useEffect(() => {
+  /* useEffect(() => {
     initializeApp()
-  }, [initializeApp])
+  }, [initializeApp]) */
 
   return (
     <div className={s.content}>
@@ -33,7 +33,17 @@ const Content = ({ initialized = false, initializeApp }) => {
           </Switch>
         </Suspense>
       ) : (
-        <PageLoading />
+        <Suspense fallback={<PageLoading />}>
+          <Switch>
+            <Route exact path='/' render={() => <Profile />} />
+            <Route path='/profile/:userId?' render={() => <Profile />} />
+            <Route path='/dialogs' render={() => <Dialogs />} />
+            <Route path='/users' render={() => <Users />} />
+            <Route path='/login' render={() => <Login />} />
+            <Route path='/news' render={() => <News />} />
+            <Route path='/images' render={() => <Images />} />
+          </Switch>
+        </Suspense>
       )}
     </div>
   )
